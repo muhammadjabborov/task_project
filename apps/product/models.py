@@ -6,13 +6,7 @@ from django.utils.text import slugify
 from rest_framework.fields import DateField
 import datetime
 
-
-class BaseModel(Model):
-    created_at = DateTimeField(auto_now_add=True)
-    updated_at = DateTimeField(auto_now=True)
-
-    class Meta:
-        abstract = True
+from apps.shared.models import BaseModel
 
 
 class Category(BaseModel):
@@ -60,7 +54,7 @@ class Product(BaseModel):
     title = CharField(max_length=255)
     description = RichTextField()
     category = ForeignKey(Category, CASCADE)
-    price = DecimalField(max_digits=9, decimal_places=2)
+    price = IntegerField()
     discount = IntegerField(default=0)
     count = IntegerField(default=1)
     size = CharField(max_length=25, choices=Size.choices, default=Size.S)

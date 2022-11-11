@@ -1,15 +1,15 @@
-from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import GenericAPIView
 from rest_framework.parsers import MultiPartParser
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from app.filters import ProductFilter
-from app.models import Category, Product, ProductImage
-from app.serializers import CategoryModelSerializer, ProductImageModelSerializer, ProductModelSerializer
+from apps.product.filters import ProductFilter
+from apps.product.models import Category, Product, ProductImage
+from apps.product.serializers import CategoryModelSerializer, ProductImageModelSerializer, ProductModelSerializer
 
 
 class CategoryModelViewSet(ModelViewSet):
@@ -43,3 +43,4 @@ class ProductModelViewSet(ModelViewSet):
     filter_backends = [SearchFilter, DjangoFilterBackend]
     search_fields = ['id', 'title']
     filterset_class = ProductFilter
+    permission_classes = [IsAuthenticated]
